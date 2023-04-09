@@ -27,9 +27,9 @@ export default function OrderForm({ addOrder }) {
         <br />
         <label htmlFor="cars">Choose a Table:</label>
         <select name="table" id="table">
-          <option value="table1">Table 1</option>
-          <option value="table2">Table 2</option>
-          <option value="table3">Table 3</option>
+          <option value="1">Table 1</option>
+          <option value="2">Table 2</option>
+          <option value="3">Table 3</option>
         </select>
         <br />
         <button onClick={clickHandler}>Add to bill</button>

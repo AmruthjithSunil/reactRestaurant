@@ -1,22 +1,35 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import OrderForm from "./components/OrderForm";
 import OrderTables from "./components/OrderTables";
 
 export default function App() {
-  const [orders, setOrders] = useState([
-    { price: 100, table: 1, id: 1, dish: "noodles" },
-    { price: 150, table: 3, id: 14, dish: "nooles" },
-  ]);
+  let initOrders;
+  if (
+    localStorage.getItem("orders") == "" ||
+    localStorage.getItem("orders") == null
+  ) {
+    initOrders = [];
+  } else {
+    initOrders = JSON.parse(localStorage.getItem("orders"));
+  }
+  const [orders, setOrders] = useState(initOrders);
+
+  useEffect(() => {
+    localStorage.setItem("orders", JSON.stringify(orders));
+  }, [orders]);
 
   function addOrder(order) {
     setOrders((orders) => [...orders, order]);
-    console.log(orders);
+  }
+
+  function deleteHandler(e) {
+    setOrders((orders) => orders.filter((order) => order.id != e.target.id));
   }
 
   return (
     <>
       <OrderForm addOrder={addOrder} />
-      <OrderTables orders={orders} />
+      <OrderTables orders={orders} deleteHandler={deleteHandler} />
     </>
   );
 }
